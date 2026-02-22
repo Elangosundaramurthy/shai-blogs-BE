@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes"); 
+const blogRoutes = require("./routes/blogRoutes");
 
 class App {
   constructor() {
@@ -33,6 +34,8 @@ class App {
     });
 
     this.app.use("/api", authRoutes); 
+    this.app.use("/api", blogRoutes);
+this.app.use("/uploads", express.static("uploads"));
   }
 
   server() {
