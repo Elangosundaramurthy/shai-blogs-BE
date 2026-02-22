@@ -1,21 +1,25 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
 require("dotenv").config();
 
-const authRoutes = require("./routes/authRoutes"); 
+const authRoutes = require("./routes/authRoutes");
 const blogRoutes = require("./routes/blogRoutes");
 
 class App {
   constructor() {
     this.app = express();
     this.database();
-    this.middleware();  
+    this.middleware();
     this.routes();
     this.server();
   }
 
   database() {
-    mongoose.connect("mongodb+srv://elangos:12345@cluster0.exrrntc.mongodb.net/shai_blogs")
+    mongoose
+      .connect(
+        "mongodb+srv://elangos:12345@cluster0.exrrntc.mongodb.net/shai_blogs",
+      )
       .then(() => {
         console.log("Connected to MongoDB");
       })
@@ -25,21 +29,22 @@ class App {
   }
 
   middleware() {
-    this.app.use(express.json()); 
+    this.app.use(cors());
+    this.app.use(express.json());
   }
 
   routes() {
-    this.app.get('/', (req, res) => {
-      res.send('API is running...');
+    this.app.get("/", (req, res) => {
+      res.send("API is running...");
     });
 
-    this.app.use("/api", authRoutes); 
+    this.app.use("/api", authRoutes);
     this.app.use("/api", blogRoutes);
-this.app.use("/uploads", express.static("uploads"));
+    this.app.use("/uploads", express.static("uploads"));
   }
 
   server() {
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 5000;
     this.app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });

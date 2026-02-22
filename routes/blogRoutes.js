@@ -16,7 +16,7 @@ router.get("/blog-list", blogController.getAllBlogs);
 
 router.put(
   "/edit-blog/:id",
-  upload.fields([
+  upload.fields([ 
     { name: "coverImage", maxCount: 1 },
     { name: "mainImage", maxCount: 1 }
   ]),

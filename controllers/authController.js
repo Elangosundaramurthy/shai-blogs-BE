@@ -4,7 +4,7 @@ const crypto = require("crypto");
 
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.query;
 
     // Check user
     const user = await User.findOne({ email });
@@ -27,9 +27,8 @@ exports.login = async (req, res) => {
 
     res.status(200).json({
       message: "Login successful",
-      token: newToken
+      token: newToken,
     });
-
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
